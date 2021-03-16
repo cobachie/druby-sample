@@ -1,4 +1,9 @@
 require 'webrick'
+require 'drb'
+require 'irb'
+
+IRB.setup(eval("__FILE__"), argv: [])
+DRb.start_service('druby://:54345', IRB::WorkSpace.new())
 
 body = <<-HTML
 <!DOCTYPE html>
@@ -9,6 +14,7 @@ body = <<-HTML
   </head>
   <body>
     <h1>きっと動いてます！</h1>
+    #{DRb.uri}
   </body>
 </html>
 HTML
@@ -18,6 +24,6 @@ $server.mount_proc('/') do |req, res|
   res.content_type = 'text/html'
   res.body = body
 end
-$server.start
 
 trap(:INT) { $server.shutdown }
+$server.start
