@@ -3,7 +3,14 @@
 ```
 $ docker pull rubylang/ruby
 
-$ docker build -t druby/min
+$ docker build -t druby/min .
 
 $ docker run -it --rum -p 8000:8000 druby/min
+```
+
+### IRB_client
+```
+$ docker build -t druby/irb_c .
+
+$ docker run -it --rm druby/irb_c druby://172.17.0.2:54345
 ```
